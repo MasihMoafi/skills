@@ -97,9 +97,16 @@ The skills listed above are present as standalone `SKILL.md` workflows and can b
 
 Cross-runtime behavior is not yet continuously verified. A skill that parses correctly is not automatically proven to behave identically in every agent runtime.
 
+The repository-owned public set is checked locally with:
+
+```bash
+python3 scripts/validate_public_skills.py
+```
+
+This verifies the tracked skills' frontmatter and keeps the public lists in `README.md` and `VISION.md` aligned. It does not prove behavior across agent runtimes.
+
 ### Planned
 
-- Automated structural validation for every public `SKILL.md`.
 - Compatibility checks across multiple supported agent runtimes.
 - More domain-specific engineering workflows when there is a repeated real use case.
 
@@ -120,7 +127,7 @@ These are design choices rather than novelty claims:
 
 ## Evals and test series
 
-There is currently no repository-level CI proving cross-runtime compatibility.
+There is currently no repository-level CI proving cross-runtime compatibility. Run the local structural validator before committing changes to a public skill.
 
 The smallest useful verification is:
 
@@ -129,7 +136,7 @@ The smallest useful verification is:
 3. verify that the runtime discovers the skill;
 4. check the agent's output against the procedure and guardrails in that `SKILL.md`.
 
-Automating this check is planned work.
+Automating cross-runtime compatibility checks is planned work.
 
 ## Future development
 

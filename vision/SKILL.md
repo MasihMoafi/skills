@@ -1,6 +1,6 @@
 ---
 name: vision
-description: Project orientation skill — locate or create the project's vision/identity file on arrival. Use on the first message in an unfamiliar project, when the user says "fmy", "familiarize yourself", or "orient yourself", or before beginning a large task without project context.
+description: Project orientation skill — locate or create the project's vision/identity file on arrival. Use on the first message in an unfamiliar project, when the user says "familiarize yourself", or "orient yourself", or before beginning a large task without project context.
 ---
 
 # Vision
