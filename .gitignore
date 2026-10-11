@@ -12,3 +12,6 @@
 # Third-party — authored by OpenAI (openai/skills), Apache-2.0, not mine to redistribute under this repo's MIT license
 /skill-creator/
 /skill-installer/
+
+# Private notes, kept locally
+/VISION.md
