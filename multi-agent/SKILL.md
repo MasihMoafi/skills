@@ -91,6 +91,9 @@ Whatever binds the task must be stated where the work happens:
 - A task that can exhaust the disk must carry the build flags and the size history.
 - A task that observes rather than fixes must say that it reports what it finds and does
   not patch it — otherwise every harness grows into a fix for the first thing it catches.
+- A GPT agent (sol through `elpis exec`) does the letter of the brief (25 Oct: it reran all
+  197 browser files to prove a six-line test change; Masih: "it's too literal"). Give it the
+  scope of its proof, what not to rerun, and when to stop and report.
 
 ## Independence check, before dispatching
 
