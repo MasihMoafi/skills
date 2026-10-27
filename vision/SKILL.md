@@ -1,41 +1,34 @@
 ---
 name: vision
-description: Project orientation skill — locate or create the project's vision/identity file on arrival. Use on the first message in an unfamiliar project, when the user says "familiarize yourself", or "orient yourself", or before beginning a large task without project context.
+description: Use when entering an unfamiliar project, when the user asks for orientation, or before a large task without reliable project context.
 ---
 
 # Vision
 
-Find the document that says what the project is, why it exists, and where things live before changing anything.
+Before changing anything, learn what the project is, where things live and what state it is in. Each of those facts has exactly one home.
 
-## Find the orientation file
+## One file per job
 
-List root Markdown files, then check these names in order:
+- `AGENTS.md` (with `CLAUDE.md` = `@AGENTS.md`, so every agent loads it): how to behave in this project. Project rules plus pointers to the files below; at most 60 lines.
+- Feature map, `.agents/skills/verify-<app>/features/` (linked from `.claude/skills/`): one file per user-facing feature with how to reach it, how to drive it, its code and its gotchas. Create it with `create-verification-skill`; keep it true with `maintain-verification-skill`.
+- Folder map, `lat.md/workspace.md`: every top-level item and why it exists; `lat check` validates the links and `.alint.yml` rejects files it doesn't list.
+- `VISION.md`: identity in one line, `## Thesis` (why it exists, what bet it makes) and `## Non-goals`; at most 25 lines. No map, state or evidence.
+- `ES.md`: the current state under `## Now`, `## Next`, `## Broken` and `## Open decisions`, with "(updated YYYY-MM-DD)" in its title; at most 40 lines. Rewrite it in place; never append a log.
+- Evidence (hashes, run IDs, verification prose) goes to `reports/` or commit messages, never into these files.
 
-1. `VISION.md`
-2. `AGENTS.md`
-3. `CLAUDE.md`
-4. `AGENT.md`
-5. `README.md`
+These files are local working notes: keep them out of public git, and link them into new worktrees.
 
-Read the first applicable file. Prefer the most project-specific source when several exist.
+## Read in this order
 
-## Extract the map
+`AGENTS.md` (already loaded), then `ES.md`, then the feature file for the task. Use the folder map before adding a file, and `VISION.md` when scope is in question. The README verifies or supplements these; it never replaces them.
 
-Identify:
+## Keep them true
 
-- the project's one-line identity;
-- its top-level directory map;
-- what is implemented versus aspirational;
-- current constraints and non-goals.
+- Change a fact in its one home only; point to it from elsewhere instead of copying it.
+- When a doc contradicts the code or another doc, check the code, fix or delete the wrong text, and say what you changed.
+- Before deleting old text, move each still-valid lesson or prohibition to the matching feature's Gotchas or to `AGENTS.md`.
+- Run the workspace check before finishing when there is one (Masih's: `python3 ~/Desktop/p/skills/findability/check_pointers.py`).
 
-## Create a vision when absent
+## Create the layout when absent
 
-If no orientation file exists:
-
-1. Inspect the project structure to a depth of two.
-2. Draft `VISION.md` with identity, purpose, directory map, honest current state, and non-goals.
-3. Show the draft to the user before saving it.
-
-## Flag drift
-
-If the orientation file contradicts the repository structure or another authoritative document, report the conflict. Do not silently choose which source is correct.
+Inspect the project two levels deep, draft the missing files in the shape above, and show the user `VISION.md` before saving it. Exemplar: `~/Desktop/p/skills/VISION.md`.
