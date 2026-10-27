@@ -1,9 +1,9 @@
 ---
-name: vision
-description: Use when entering an unfamiliar project, when the user asks for orientation, or before a large task without reliable project context.
+name: project-docs
+description: Use when entering an unfamiliar project, when creating or repairing a project's agent docs (AGENTS.md, feature map, lat.md folder map, VISION.md, ES.md), or when the workspace check reports doc problems.
 ---
 
-# Vision
+# Project docs
 
 Before changing anything, learn what the project is, where things live and what state it is in. Each of those facts has exactly one home.
 
@@ -27,7 +27,6 @@ These files are local working notes: keep them out of public git, and link them 
 - Change a fact in its one home only; point to it from elsewhere instead of copying it.
 - When a doc contradicts the code or another doc, check the code, fix or delete the wrong text, and say what you changed.
 - Before deleting old text, move each still-valid lesson or prohibition to the matching feature's Gotchas or to `AGENTS.md`.
-- Run the workspace check before finishing when there is one (Masih's: `python3 ~/Desktop/p/skills/findability/check_pointers.py`).
 
 ## Create the layout when absent
 

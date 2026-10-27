@@ -1,6 +1,6 @@
 ---
 name: harness-eng
-description: "Use when designing, evaluating, or simplifying an agent project harness: AGENTS.md/CLAUDE.md rules, startup scripts, progress logs, feature trackers, handoffs, evaluator rubrics, quality documents, repo-local knowledge maps, and mechanical guardrails for coding agents. Especially useful when converting raw agent-workflow notes into a concise, verifiable project control layer."
+description: "Use when designing, evaluating, or simplifying an agent project harness: startup scripts, evaluator rubrics, mechanical guardrails and the evaluation loop for coding agents. The project docs themselves (AGENTS.md, feature map, folder map, VISION.md, ES.md) follow the project-docs skill."
 ---
 
 # Harness Engineering
@@ -25,82 +25,11 @@ Use this skill to make an agent-run project easier to start, steer, verify, resu
 
 ## Harness artifacts
 
-Use these only when they fit the project:
+The project docs (rules file, feature map, folder map, vision, current state) follow the `project-docs` skill; add no parallel progress, handoff or feature-list files. Add these only when they fit:
 
-- `AGENTS.md`: short operating map, source-of-truth pointers, definition of done, and project-specific guardrails.
-- `init.sh`: one command for setup/baseline verification/startup hints. It should print the cwd and fail clearly.
-- `progress.md` or `.ES/.../ES.md`: current verified state, blocker, latest verification, next action.
-- `feature_list.json`: machine-readable queue when there are multiple user-visible features.
-- `session-handoff.md`: compact state transfer after long or risky sessions.
-- `clean-state-checklist.md`: end-of-session checks for startup, tests, docs, feature status, and unfinished work.
+- `init.sh`: one command for setup, baseline verification and startup hints. It prints the cwd and fails clearly.
 - `evaluator-rubric.md`: pass/fail scorecard for agent output quality; tune it against human judgment.
-- `quality-document.md`: snapshot of product/domain/layer health over time.
-- Custom lints/tests: enforce dependency boundaries, schemas, logging, naming, file size, or other rules that agents repeatedly violate.
-
-## Minimal templates
-
-Prefer adapting these sections in place over creating all files by default.
-
-### `AGENTS.md`
-
-```markdown
-# Project Agent Rules
-
-## Start Here
-- Read this file, then read: <progress/doc paths>.
-- Verify cwd: `<expected path or command>`.
-- Baseline check: `<test or smoke command>`.
-
-## Work Rules
-- Work on one task/feature at a time.
-- Keep changes scoped to <area/feature>.
-- Preserve <important APIs/contracts>.
-- Use <package manager/test command/style command>.
-
-## Definition of Done
-- Behavior matches: <acceptance criteria>.
-- Verification run: <commands>.
-- Evidence recorded in: <progress/handoff path>.
-- Known risks or skipped checks are explicitly listed.
-```
-
-### Progress state
-
-```markdown
-# Progress
-
-Current Verified State:
-- Root:
-- Startup:
-- Verification:
-- Highest priority unfinished work:
-- Current blocker:
-
-Session Record:
-- Date:
-- Goal:
-- Completed:
-- Verification run:
-- Evidence:
-- Known risks:
-- Next best action:
-```
-
-### Feature item
-
-```json
-{
-  "id": "short-id",
-  "priority": 1,
-  "area": "area-name",
-  "title": "User-visible feature",
-  "user_visible_behavior": "What should be true when done",
-  "status": "not_started",
-  "verification": ["Step 1", "Step 2"],
-  "evidence": [],
-  "notes": ""
-}
-```
+- Custom lints or tests: enforce dependency boundaries, schemas, logging, naming, file size or other rules agents keep breaking.
 
 ## Evaluation loop
 

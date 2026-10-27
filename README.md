@@ -62,7 +62,7 @@ A skill turns that repeated instruction into a repository-owned procedure that c
 - **[`product-design`](product-design/SKILL.md)** — product architecture, user-flow design, stack selection, and frontend-first execution planning.
 - **[`req-engineering`](req-engineering/SKILL.md)** — acceptance-criteria-first requirements discipline and verification trust hierarchy.
 - **[`training-nn`](training-nn/SKILL.md)** — neural-network training recipe and common failure-mode checklist.
-- **[`vision`](vision/SKILL.md)** — project orientation: locate or create the vision file that tells an agent what a project is before it edits anything.
+- **[`project-docs`](project-docs/SKILL.md)** — the per-project agent docs (rules, feature map, folder map, vision, current state): one job and one home each; how to read, repair or create them.
 - **[`word-farsi-docx`](word-farsi-docx/SKILL.md)** — producing clean Word-native Persian (B Nazanin) `.docx` output without breaking formatting.
 
 Personal machine configuration and third-party-authored skills are intentionally excluded from the public repository.
