@@ -5,17 +5,15 @@ description: Use for nontrivial implementation, requirements, a PRD or vision do
 
 # Spec-Driven Development
 
-Code is perishable; a spec records intent, and intent lasts. An agent fills gaps silently from its training data, so the human sets the intent, boundaries and acceptance criteria before generation begins. (Source: *AI-Native Software Engineering*, chapters 5 and 6.)
+Define what done means before code is generated, because an agent silently fills any gap in intent from its training data.
 
-Right-size the loop to the work. A small, well-understood change can use a short spec and plan in one session. For discovery, use a focused prompt, Plan Mode or a throwaway spike first; specify the production change once its behavior is known.
-
-A spec or plan adds no approval gate to clear, authorized local work. Resolve material gaps in intent before implementing, and ask only about those gaps or about consequences outside the existing authorization.
+Right-size the loop to the work. A small, well-understood change can use a short spec and plan in one session. For discovery, use a focused prompt, Plan Mode or a throwaway spike first; specify the production change once its behavior is known. A spec adds no approval gate; ask only about material gaps in intent.
 
 The loop: **Specify, Plan, Execute, Verify, Integrate, Learn.** Return to Specify or Plan whenever the evidence changes the intent or the approach.
 
 ## 1. Specify
 
-State exactly what must be true when the work is done. Avoid generic checks such as "feature works"; make the happy path observable. Add the risk criteria relevant to the change, and all four when it touches money, data, security or external integrations:
+State exactly what must be true when the work is done. Make the happy path observable; "feature works" is not a criterion. Add the risk criteria relevant to the change, and all four when it touches money, data, security or external integrations:
 
 1. **Failure mode:** what happens when a dependency or write fails (*"If the write fails, restore UI state and show an error without clearing the form"*).
 2. **Concurrency:** what happens when actors or async events collide (*"Toggling a preference does not affect notifications already queued"*).
@@ -52,15 +50,12 @@ Keep the artifacts under version control and reachable from the code they govern
 - [Four to six specific to this task, such as:]
 - Stop and ask if two valid approaches conflict in architecture fit.
 - Stop and ask if a test still fails after 3 fix attempts.
-- Stop and ask if existing behavior contradicts the spec.
 - Stop and ask before deleting or migrating data outside a test environment.
 ```
 
 ## 2. Plan
 
-The agent prepares the plan; the user reviews it only when a decision is theirs.
-
-> *"Read spec.md. Explore the codebase for its conventions on [concern]. Write plan.md: approach, trade-offs, files affected and sequencing. Write no implementation code."*
+The agent reads `spec.md`, explores the codebase's conventions and writes `plan.md` with no implementation code; the user reviews it only when a decision is theirs.
 
 ```markdown
 # PLAN: [Feature Name]
@@ -80,13 +75,7 @@ The agent prepares the plan; the user reviews it only when a decision is theirs.
 3. [UI and integration tests]
 ```
 
-Then decompose:
-
-> *"Read plan.md and write tasks.md. Make each task one atomic change with an objective done-check, ordered by dependency."*
-
-Each task must fit one session and be verifiable on its own; if its done-check needs "and" more than once, split it. Done-checks are binary and observable, such as a passing test or a command's output.
-
-Rate each task on two independent axes. **Importance** (Foundational, Important, Nice-to-have) expresses value; **difficulty** (Easy, Medium, Hard) routes the implementation. Do not confuse one for the other.
+Then decompose `plan.md` into `tasks.md`: one atomic change per task, ordered by dependency, each small enough for one session. A done-check is binary and observable, such as a passing test or a command's output; if it needs "and" more than once, split the task. Rate each task on two independent axes: **importance** (Foundational, Important, Nice-to-have) expresses value; **difficulty** (Easy, Medium, Hard) routes the implementation.
 
 ```markdown
 # TASKS: [Feature Name]
@@ -94,20 +83,13 @@ Rate each task on two independent axes. **Importance** (Foundational, Important,
 ## Phase 1: Backend
 - [ ] 1.1 [Task] (Foundational, Medium)
   **Done when:** [endpoint returns 200 on a valid token, 401 without one]
-
-## Phase 2: Frontend
-- [ ] 2.1 [Component] (Important, Easy)
-  **Done when:** [component renders and passes its integration test]
 ```
 
-For high-risk or stateful work, add `risks.md` (risks and mitigations), `rollback.md` (how to revert under incident conditions) or `adr.md` (long-term design decisions). An optional `implementation_notes.md` can carry surprising legacy behavior, workarounds and discoveries across turns.
+For high-risk or stateful work, add `risks.md`, `rollback.md` or `adr.md`. An optional `implementation_notes.md` carries surprising legacy behavior, workarounds and discoveries across turns.
 
 ## 3. Execute
 
-- Hand the agent `spec.md`, `plan.md` and `tasks.md`.
-- Run one task per fresh session when a combined diff would be too large to review or context rot is a real risk; otherwise run the whole list in one session.
-- Mark `[x]` as each done-check passes.
-- When reality contradicts the spec, stop, update `spec.md` and, if needed, `plan.md`, then resume.
+Hand the agent `spec.md`, `plan.md` and `tasks.md`. Run one task per fresh session when a combined diff would be too large to review or context rot is a real risk; otherwise run the whole list in one session. Mark `[x]` as each done-check passes. When reality contradicts the spec, stop, update `spec.md` and, if needed, `plan.md`, then resume.
 
 ## 4. Verify
 
@@ -122,13 +104,9 @@ Name the level behind every completion claim. Give the user a plain test checkli
 
 ## 5. Integrate and Learn
 
-Prepare a reviewable local result. Create a PR or merge only within existing authorization, after the gates and review.
+Prepare a reviewable local result. Create a PR or merge only within existing authorization, after the gates and review. Specs live in two tiers. The strategic tier stays current: system-wide rules (`AGENTS.md`), ADRs and architecture invariants. The tactical tier is history: each `specs/NNN-...` folder records intent at one point in time. After integration, decide what the evidence requires you to update: the current spec or plan, strategic rules or ADRs, done-checks, or follow-on work.
 
-Specs live in two tiers. The strategic tier stays current: system-wide rules (`AGENTS.md`), ADRs and architecture invariants. The tactical tier is history: each `specs/NNN-...` folder records intent at one point in time.
-
-After integration, spend ten minutes deciding what the evidence requires you to update: the current spec or plan, strategic rules or ADRs, done-checks, or follow-on work. Use `implementation_notes.md` as input when it exists.
-
-## Vision and Requirements Documents
+## Vision and requirements documents
 
 A vision document or PRD states:
 
@@ -138,3 +116,5 @@ A vision document or PRD states:
 - **Non-goals:** deferred and unsupported behavior, next to the goals.
 
 Keep the stable vision apart from current implementation status, and cross-reference the two.
+
+Source: *AI-Native Software Engineering*, chapters 5 and 6.

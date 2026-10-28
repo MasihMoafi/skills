@@ -1,30 +1,25 @@
 ---
 name: clean-system
-description: Use when the user asks to clean up, reclaim disk space, or clear the clutter Claude Code, Codex and Elpis keep adding (old chat logs, file history, logs, backups). Agent clutter is cleared aggressively by default; caches and Docker still need approval.
-metadata:
-  short-description: Aggressively clear agent clutter; audit other disk use
+description: Reclaim disk space or clear the clutter Claude Code, Codex and Elpis leave (old chat logs, file history, logs, backups), or name or remove single sessions. Agent clutter goes without asking; caches and Docker need a yes.
 ---
 
 # System clean-up
 
-Masih (14 Oct 2026): "make it more aggressive as claude and codex just keep adding shit"; "I hate backups"; "make sure all those get deleted safely".
+## 1. Agent clutter: clear it without asking (rule 27)
 
-## 1. Agent clutter: clear it, don't ask per item
-
-Run `python3 ~/Desktop/p/skills/clean-system/clean.py` (dry run), show the per-category totals, then run it with `--apply`.
+Run `python3 clean.py` from this folder (dry run), show the per-category totals, then run it with `--apply`.
 - **What it clears:** old Claude, Codex and Elpis chat logs, Claude file history and scratch, Codex and Elpis logs, Codex per-run configs, and backups (`*.bak`, `*.pre-*`, `*.before-*`, `*backup*`) in the agent config folders.
 - **One-off targets:** add them with `--also PATH ...`.
 - **What it always spares:**
   - anything touched in the last 24 hours, or open in a running process;
   - memory folders, credentials, live `config.toml` and `settings.json`, databases, prompt history;
   - skills, plugins, jobs, plans, `ES.md`.
-- Everything goes to the desktop trash (`gio trash`), never `rm`.
-- **Make no backups.** The trash is the only safety net.
-- If an auto-mode classifier blocks `--apply`, don't work around it. Give Masih the exact `! python3 … --apply` command to run himself.
+- Everything goes to the trash (`gio trash`).
+- If an auto-mode classifier blocks `--apply`, don't work around it. Give the user the exact `! python3 … --apply` command to run.
 
 ## 2. Everything else: audit, then ask
 
-Package caches and Docker hold other projects' state, so list the targets with sizes and get Masih's yes per category.
+Package caches and Docker hold other projects' state, so list the targets with sizes and get the user's yes per category.
 - **Caches:**
   - **uv:** `du -sh ~/.cache/uv`, cleaned by `uv cache clean`.
   - **pip:** `~/.cache/pip`, cleaned by `pip cache purge`.
@@ -36,4 +31,8 @@ Package caches and Docker hold other projects' state, so list the targets with s
 
 ## 3. Verify
 
-Rerun the dry run and `df -h /`. Report what moved and how much space was freed. Note that it all sits in the trash until Masih empties it.
+Rerun the dry run and `df -h /`. Report what moved and how much space was freed. Note that it all sits in the trash until the user empties it.
+
+## 4. Single sessions: name or remove one at a time
+
+For a recent session the user wants named or judged individually, read only its product's own history root (Claude Code `~/.claude/projects/`, Codex `~/.codex/sessions/`, Elpis `~/.elpis-next/sessions/`), list id, short summary, last activity and message count in one table, and propose a 3 to 6 word name from the first meaningful user message. Rename or remove only through the product's own command, never by editing raw logs or indexes, and never the current session or one with a live writer.

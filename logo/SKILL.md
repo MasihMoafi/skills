@@ -28,11 +28,8 @@ vector conversion.
 4. Select a candidate and explain the choice briefly. Use image generation for
    revisions. Do not silently redraw a different design during vector conversion.
 
-   For Masih's approved AI-agent icon style and exact successful prompts, see
-   [the 24 October example](examples/agents-20261024/WORKFLOW.md). Show candidates
-   as inline images in the final response; tool outputs may be collapsed in his
-   app. A recommendation is not user selection: wait for his choice before
-   applying artwork to the product or installing it.
+   Show candidates as inline images in the final response. A recommendation is not a
+   selection: wait for the user's choice before applying artwork or installing it.
 
 ## Convert through SVG Studio
 

@@ -5,18 +5,18 @@ description: "Invoke whenever writing, changing, reviewing, or sweeping tests: a
 
 # Test Audit
 
-Three modes, one value bar. Authoring mode gates every new or changed test at
-write time. Audit mode runs focused sweeps of tests that re-assert source,
-duplicate stronger proof, couple behavior to implementation, or keep test-only
-production seams alive. Continue broad audits as separate coherent follow-up
-PRs; optimize for confidence, not deletion count. Campaign mode reviews one
-subsystem's test surface. Define its owner boundaries and validation commands
-before starting, then apply the same value and retention rules to each batch.
+Keep only tests that earn their maintenance cost, in three modes with one value bar.
+
+- **Authoring:** gate every new or changed test at write time.
+- **Audit:** sweep for tests that re-assert source, duplicate stronger proof,
+  couple to implementation, or keep test-only production seams alive. Optimize
+  for confidence, not deletion count.
+- **Campaign:** review one subsystem's test surface. Define its owner boundaries
+  and validation commands first, then apply the same rules to each batch.
 
 ## Authoring gate
 
-Before adding any test, answer four questions; a missing answer means do not
-add it yet:
+Before adding any test, answer four questions; a missing answer means wait:
 
 1. What observable behavior, invariant, or independent contract does it protect?
 2. What credible regression makes it fail?
@@ -30,19 +30,12 @@ add it yet:
 
 Then check the test against every [junk pattern](#junk-patterns); a match fails
 the gate unless the [retention bar](#retention-bar) names the contract it
-independently guards. A test that would break under behavior-preserving
-refactoring is asserting implementation, not behavior; rewrite it at the
-owning boundary before landing it.
-
-Bug regression tests must fail on the pre-fix code for the intended reason and
-pass after the owner-boundary repair. A regression test that never demonstrably
-failed proves the mock, not the fix. One regression at the owner boundary
-covers the bug; do not replay the same scenario at every layer it crosses.
+independently guards. The [tdd skill](../tdd/SKILL.md) defines a good test
+and the regression rule (sections "A good test" and "Bugs").
 
 ## Junk patterns
 
-The shared checklist for both modes: the authoring gate rejects a new test that
-matches one, and audits hunt for existing tests that do.
+The gate rejects a new test that matches one; audits hunt for existing ones.
 
 - assertion-free coverage probes;
 - self-comparisons and identity copiers;
@@ -78,14 +71,10 @@ routing, and relevant history. Read root and scoped `AGENTS.md` files first.
 When the test claims dependency-backed behavior, inspect the dependency source
 or types directly.
 
-## Discovery
-
 Keep discovery read-only and report evidence before editing. For broad scope,
-run parallel discovery lanes when available: one per top-level area of the
-repository, plus a cross-cutting pattern sweep.
-
-Outside campaign mode, prefer a few high-confidence candidates over a large
-speculative inventory. Hunt for the [junk patterns](#junk-patterns).
+run parallel lanes when available: one per top-level area of the repository,
+plus a cross-cutting pattern sweep. Outside campaign mode, prefer a few
+high-confidence candidates over a large speculative inventory.
 
 ## Retention bar
 
@@ -106,8 +95,7 @@ may still be the independent contract; prove otherwise before removing it.
 
 ## Candidate evidence
 
-Record every field below before editing. A missing field means the candidate is
-not ready for deletion:
+Record every field before editing; a missing field means not ready to delete:
 
 - exact test name and location;
 - what failure it can actually detect;
@@ -124,9 +112,8 @@ globals, wrappers, and dead production paths instead of preserving aliases.
 Move retained regressions to their canonical owners. Consolidate repeated
 package or dependency assertions into one generic contract.
 
-Prefer net-negative production LOC. Do not add replacement tests that restate
-the same implementation, and do not convert uncertain candidates into cleanup
-to increase deletion counts.
+Prefer net-negative production lines. Do not add replacement tests that restate
+the same implementation, or turn uncertain candidates into cleanup for count.
 
 ## Validation
 
@@ -134,38 +121,25 @@ Read the target repository's test commands and execution policy first. Do not
 edit files while a test run that reads them is in progress. Route heavy proof
 through the project's documented environment.
 
-1. Run the smallest owner and sibling tests with the repository's supported
-   runner and path or test filter.
+1. Run the smallest owner and sibling tests with the supported runner and filter.
 2. For removed source greps or plan assertions, run the executable script or
    dry-run that owns the real contract.
 3. Run targeted formatting, then `git diff --check`.
 4. Run the checks required for the changed paths by repository policy.
-5. Inspect `git diff --numstat`; report production/tooling separately from
-   tests and test support.
+5. Inspect `git diff --numstat`; report production and tooling apart from tests.
 6. Review the final diff and run any additional review required by the project.
 
-## Landing and continuation
+## Landing and report
 
-Commit, push, open a PR, or land only when authorized. Follow the target
-repository's documented review and integration flow. Land one coherent PR at a
-time; after landing, refresh from its current integration branch and rerun
-read-only discovery for the next high-confidence batch.
-
-## Handoff
-
-Report:
-
-- root cause and removed low-value categories;
-- production owner simplifications;
-- retained false positives and why they remain valuable;
-- focused and full proof actually run;
-- production versus test LOC;
-- PR and merge state;
-- named follow-ups.
+Land only when authorized, one coherent batch at a time, then rerun read-only
+discovery for the next batch. Report the root cause, removed categories,
+retained false positives and why they stay, the proof actually run, production
+versus test lines changed, and named follow-ups.
 
 ## Layered verification
 
 Tests are one layer; stack cheaper layers before human attention, scaled to risk:
+
 1. Deterministic guardrails: strict types, lint, tests, security and secret scans.
 2. LLM review in a fresh, adversarial context: spec alignment and test rigor.
 3. Deploy-time safety: flags, canaries, rollback on objective SLO signals.

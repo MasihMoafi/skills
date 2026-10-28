@@ -1,4 +1,4 @@
-# Personal: machine-specific config, Masih's own rules and preferences, workspace checks
+# Personal: machine-specific config, the owner's rules and preferences, workspace checks
 /dev/
 /personal/
 /workstation/
@@ -17,7 +17,5 @@
 /maintain-verification-skill/
 
 __pycache__/
-/elements-of-style.md
-/spec/masih.md
 /VISION.md
 /ES.md

@@ -23,10 +23,10 @@ os.environ["NO_PROXY"] = os.environ["no_proxy"] = "127.0.0.1,localhost"
 APPS = {
     "elpis": {
         "port": int(os.environ.get("APPCTL_ELPIS_PORT", "9336")),
-        "cmd": [os.environ.get("APPCTL_ELPIS", str(Path.home() / "Desktop/p/Elpis-wt-continuity/apps/elpis-desktop/desktop/launch.sh"))],
+        "cmd": [os.environ.get("APPCTL_ELPIS", "elpis-desktop")],  # set APPCTL_ELPIS to the app's launch script
     },
     # Its in-app browser tabs are pages too; `main` picks the app's own window.
-    "chatgpt": {"port": 9334, "main": "app://-/index.html", "cmd": ["/usr/lib/chatgpt/ChatGPT", "--proxy-server=http://127.0.0.1:10808"]},
+    "chatgpt": {"port": 9334, "main": "app://-/index.html", "cmd": ["/usr/lib/chatgpt/ChatGPT", *([f"--proxy-server={os.environ['APPCTL_PROXY']}"] if os.environ.get("APPCTL_PROXY") else [])]},
     # Claude refuses to start with a debug port; as an X11 window it is seen and driven by pixels.
     "claude": {"x11": "Claude", "cmd": ["/usr/lib/claude-desktop/claude-desktop", "--ozone-platform=x11"]},
 }

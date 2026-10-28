@@ -1,22 +1,17 @@
 ---
 name: tdd
-description: "Test-driven development for real work: the agent writes the failing test, then the code, one behavior at a time. Use when building a feature or fixing a bug test-first, or when the user says tdd, red-green, or test-first."
+description: "Test-driven development: the agent writes the failing test, then the code, one behavior at a time. Use when building a feature or fixing a bug test-first, or when the user says tdd, red-green, or test-first."
 ---
 
 # Test-Driven Development
 
-The agent does the work: it writes the test and the code. The loop is
-**red → green**, one **slice** at a time.
-
-Ideas adapted from `mattpocock/skills` (`tdd`): vertical slices, seams, and
-tautological tests.
+The agent writes the failing test, then the code that passes it, one **slice** at a time.
 
 ## Before the first test
 
 1. Name the behavior in one line: input, expected outcome, non-goals.
 2. Pick the **seam**: the public boundary you will test at (a function, CLI,
-   HTTP route, or rendered UI). Choose it yourself from the code. Ask the user
-   only when the *desired behavior* is ambiguous, not to approve the seam.
+   HTTP route, or rendered UI). Choose it yourself from the code.
 3. Find the test command the repo already uses (`package.json`, `pyproject`,
    `Makefile`). Run it once so you know the baseline.
 
@@ -58,8 +53,8 @@ report it as a measurement with its inputs.
 
 ## Bugs
 
-Write the regression test first and show it failing on the current code.
-Then fix. A regression test that never failed proves nothing.
+Write the regression test first and show it failing on the current code for
+the intended reason. Then fix. A regression test that never failed proves nothing.
 
 ## Done
 
@@ -71,3 +66,5 @@ The slice is done when you can show:
 
 Label the work honestly: TDD, regression test, characterization test, or
 refactor. Tests existing is not TDD.
+
+Source: `mattpocock/skills` (`tdd`), for vertical slices, seams and tautological tests.

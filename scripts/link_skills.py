@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Make the skill registries mirror Masih's skills library, ~/Desktop/p/skills/<name>/SKILL.md.
+"""Make the skill registries mirror the skills library this script lives in (<library>/<name>/SKILL.md).
 
 - Each registry (~/.claude/skills, ~/.agents/skills, ~/.codex/skills) gets <name> -> the library folder; a link
   that points elsewhere is replaced. A link whose target is gone or has no SKILL.md is removed (os.unlink).
@@ -13,10 +13,9 @@ import os, sys
 from pathlib import Path
 
 HOME = Path.home()
-LIBRARY = HOME / 'Desktop/p/skills'
+LIBRARY = Path(__file__).resolve().parents[1]
 REGISTRIES = (HOME / '.claude/skills', HOME / '.agents/skills', HOME / '.codex/skills')  # the first is Claude Code's
-CONFIG = Path(os.environ.get('CLAUDE_CONFIG_DIR')
-              or '/home/masih/.elpis-next/elpis-claude/claude-accounts/66601136-bf70-4727-8da3-0e2e8efc7e99') / 'skills'
+CONFIG = Path(os.environ['CLAUDE_CONFIG_DIR']) / 'skills' if os.environ.get('CLAUDE_CONFIG_DIR') else None  # Claude Code's account dir when it is not ~/.claude
 NOT_SKILLS = {'dev', 'scripts'}
 ELPIS_OWNED = {'synced'}  # Elpis recreates this in the config dir; it is not a skill
 
@@ -67,6 +66,8 @@ def sync(lib, registries, config, apply=False):
             if entry.name not in skills and not (entry / 'SKILL.md').is_file():
                 prune(entry)
 
+    if config is None:
+        return out
     claude = registries[0]
     names = {entry.name for entry in entries(claude)}
     for name in sorted(names):

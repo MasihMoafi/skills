@@ -1,6 +1,6 @@
 ---
 name: experiment-workflow
-description: Use when designing, running, or comparing a repeatable experiment in any domain where a decision question, controlled variables, baselines, measurements, and raw evidence matter. Do not use for ordinary unit tests or one-off checks.
+description: Use when designing, running, or comparing a repeatable experiment where a decision question, controlled variables, baselines, measurements, and raw evidence matter. Not for ordinary unit tests or one-off checks.
 ---
 
 # Experiment Workflow
@@ -18,15 +18,12 @@ person to reproduce the run and judge the conclusion.
   condition before seeing the result.
 - **Evidence over summaries:** Preserve raw observations alongside calculated
   metrics and conclusions.
-- **Decision ownership:** The agent may draft and run an approved experiment.
-  Ask before choices that would change the hypothesis, data, cost, or evaluation
-  method; do not interrupt for routine execution details.
 
 ## Workflow
 
 ### 1. Question and decision
-Turn the request into one precise question or hypothesis. State the decision it
-will inform, the comparison being made, and what the experiment cannot establish.
+Turn the request into one precise question or hypothesis. State the comparison
+being made and what the experiment cannot establish.
 
 ### 2. Variables and controls
 Name the independent variable, observed outcomes, fixed conditions, baseline,
@@ -53,8 +50,7 @@ results side by side.
 ### 6. Evaluate and iterate
 Separate observations from interpretations. Compare the evidence with the
 predeclared threshold, report uncertainty and limitations, and state the
-decision the evidence supports. For the next run, change one variable and retain
-the previous run as the baseline.
+decision the evidence supports. Keep each run as the baseline for the next.
 
 ## Domain adaptations
 
@@ -63,7 +59,7 @@ operations, or process experiments. Choose domain-appropriate measures rather
 than forcing one template onto every experiment.
 
 For retrieval or RAG, a semantic/keyword/hybrid query suite is one useful stress
-test—not a universal requirement. A medium-to-large corpus may justify 10 queries
+test, not a universal requirement. A medium-to-large corpus may justify 10 queries
 of each type; smaller studies should use fewer. Preserve the query set, retrieved
 passages, ranks, latency, chunking configuration, and corpus identity so results
 can be compared and reproduced.

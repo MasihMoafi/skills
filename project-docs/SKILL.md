@@ -28,6 +28,10 @@ These files are local working notes: keep them out of public git, and link them 
 - When a doc contradicts the code or another doc, check the code, fix or delete the wrong text, and say what you changed.
 - Before deleting old text, move each still-valid lesson or prohibition to the matching feature's Gotchas or to `AGENTS.md`.
 
+## Harness beyond the docs
+
+Add a harness component only around a workflow the user repeats, and only the smallest one that fixes the agent's bottleneck: `init.sh` (setup, baseline check, startup hints, prints the cwd), `evaluator-rubric.md` (pass/fail scorecard tuned against human judgment), or a lint or test for a rule agents keep breaking. Verify it by running the cheapest check that proves a fresh agent can follow it. When unsure a component is still needed, remove it, run the task suite, and keep the simpler version if quality holds.
+
 ## Create the layout when absent
 
-Inspect the project two levels deep, draft the missing files in the shape above, and show the user `VISION.md` before saving it. Exemplar: `~/Desktop/p/skills/VISION.md`.
+Inspect the project two levels deep, draft the missing files in the shape above, and show the user `VISION.md` before saving it. Exemplar: this library's `VISION.md`.
