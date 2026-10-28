@@ -11,11 +11,12 @@ type: reusable AI-agent workflows for developers using SKILL.md-compatible assis
 
 **Do not re-explain the same working method to an agent every session.**
 
-[![Skills](https://img.shields.io/badge/skills-15-orange?style=flat-square)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-20-orange?style=flat-square)](#available-skills)
 [![Install](https://img.shields.io/badge/install-npx%20skills-brightgreen?style=flat-square)](#quick-start)
 [![Format](https://img.shields.io/badge/format-SKILL.md-blue?style=flat-square)](#how-it-works)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![Last commit](https://img.shields.io/github/last-commit/MasihMoafi/skills?style=flat-square&color=lightgrey)](https://github.com/MasihMoafi/skills/commits/main)
+[![skills.sh](https://skills.sh/b/MasihMoafi/skills)](https://skills.sh/MasihMoafi/skills)
 
 [Install](#quick-start) • [Skills](#available-skills) • [How it works](#how-it-works) • [State](#current-state)
 
@@ -49,20 +50,25 @@ A skill turns that repeated instruction into a repository-owned procedure that c
 
 ## Available skills
 
+- **[`app-control`](app-control/SKILL.md)** — drive an Electron app through its Chromium DevTools port the way its user does: see, click, type, and check.
 - **[`artifact`](artifact/SKILL.md)** — handling rules for PDFs, HTML reports, slides, LaTeX/XeLaTeX documents, and formula rendering.
 - **[`chat-cleaner`](chat-cleaner/SKILL.md)** — map, name, and triage accumulated agent chat history into a clean inventory.
-- **[`clean-system`](clean-system/SKILL.md)** — consent-gated disk-space audit and cleanup workflow.
-- **[`doc-style`](doc-style/SKILL.md)** — evidence-first README, specification, and launch-writing standard.
-- **[`dumb-down`](dumb-down/SKILL.md)** — switch the agent to plain, non-technical explanation: no code, no jargon, no commands.
+- **[`clean-system`](clean-system/SKILL.md)** — consent-gated disk-space audit and cleanup of the clutter coding agents leave behind.
+- **[`contribution-checklist`](contribution-checklist/SKILL.md)** — check a contributor issue or call for participation for a clear ask, a starting point, and mentoring.
+- **[`designer`](designer/SKILL.md)** — ten principles for diagrams, charts, slides, and reports where hierarchy and clarity matter.
+- **[`doc-style`](doc-style/SKILL.md)** — evidence-first README, specification, and launch-writing standard, with an audit mode for AI self-talk and stale claims.
 - **[`experiment-workflow`](experiment-workflow/SKILL.md)** — variable-isolated experiment workflow with explicit hypotheses and stress tests.
-- **[`first-principles`](first-principles/SKILL.md)** — engineering simplification workflow: question → delete → simplify → accelerate → automate.
-- **[`gitlab`](gitlab/SKILL.md)** — branch-protection and merge-request workflow guidance for GitLab repositories.
-- **[`harness-eng`](harness-eng/SKILL.md)** — agent-project harness design: rules, progress state, feature tracking, and evaluator contracts.
-- **[`pdf`](pdf/SKILL.md)** — visual-first workflow for reading, creating, and validating PDFs.
+- **[`first-principles`](first-principles/SKILL.md)** — engineering simplification workflow: question, delete, simplify, accelerate, automate.
+- **[`harness-eng`](harness-eng/SKILL.md)** — agent-project harness design: startup scripts, evaluator rubrics, mechanical guardrails, and the evaluation loop.
+- **[`latex-authoring`](latex-authoring/SKILL.md)** — writing, structuring, and compiling LaTeX papers and technical reports.
+- **[`logo`](logo/SKILL.md)** — image-first visual assets: generate with the image tool, then keep the chosen artwork as real SVG paths.
+- **[`multi-agent`](multi-agent/SKILL.md)** — multi-agent dispatch protocol: one task, one branch, one worktree, and coordinator integration.
 - **[`product-design`](product-design/SKILL.md)** — product architecture, user-flow design, stack selection, and frontend-first execution planning.
-- **[`req-engineering`](req-engineering/SKILL.md)** — acceptance-criteria-first requirements discipline and verification trust hierarchy.
-- **[`training-nn`](training-nn/SKILL.md)** — neural-network training recipe and common failure-mode checklist.
-- **[`project-docs`](project-docs/SKILL.md)** — the per-project agent docs (rules, feature map, folder map, vision, current state): one job and one home each; how to read, repair or create them.
+- **[`project-docs`](project-docs/SKILL.md)** — the per-project agent docs (rules, feature map, folder map, vision, current state): one job and one home each.
+- **[`reference-driven-product`](reference-driven-product/SKILL.md)** — improve or rebuild a product from a reference app, screenshots, user feedback, or open-source alternatives.
+- **[`spec`](spec/SKILL.md)** — spec-driven development: acceptance criteria, verification trust, and task importance versus difficulty, written before code.
+- **[`tdd`](tdd/SKILL.md)** — write a failing behavior test, implement the change, and refactor with focused checks.
+- **[`test-audit`](test-audit/SKILL.md)** — authoring gate for new tests and an audit that removes low-value, implementation-coupled, or duplicate tests.
 - **[`word-farsi-docx`](word-farsi-docx/SKILL.md)** — producing clean Word-native Persian (B Nazanin) `.docx` output without breaking formatting.
 
 Personal machine configuration and third-party-authored skills are intentionally excluded from the public repository.
@@ -103,7 +109,7 @@ The repository-owned public set is checked locally with:
 python3 scripts/validate_public_skills.py
 ```
 
-This verifies the tracked skills' frontmatter and keeps the public lists in `README.md` and `VISION.md` aligned. It does not prove behavior across agent runtimes.
+This verifies the tracked skills' frontmatter and keeps the list above aligned with the tracked set. It does not prove behavior across agent runtimes.
 
 ### Planned
 

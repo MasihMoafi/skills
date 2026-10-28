@@ -6,8 +6,7 @@
 - Keep a tiny inventory: page count, text-extraction result, and what the pages contain.
 - Stay local-first; no internet OCR/upload unless explicitly requested.
 - After editing or creating a PDF the user needs to inspect, first verify locally by rendering a page/image.
-- Then open the PDF for the user with the system opener, e.g. `xdg-open <absolute-pdf-path>` (`open` on macOS).
-- If that silently fails, launch the document viewer directly with `setsid evince <absolute-pdf-path> >/tmp/<task>-evince.log 2>&1 &` and check `ps`/the log.
+- Then use the environment's documented user-visible opener and confirm that the viewer starts. On Masih's workstation, follow the `workstation` skill's `op` procedure.
 
 ## HTML UI Verifiability
 
@@ -100,8 +99,8 @@ pandoc input.md -s --mathml -c style.css -o output.html
 - Verify formulas became real MathML and that raw TeX delimiters are not left behind:
 
 ```bash
-grep -n '<math' output.html | head
-grep -n '\[\|\]\|\$\$' output.html | head
+rg -n '<math' output.html | head
+rg -n '\[|\]|\$\$' output.html | head
 ```
 
 - If MathML is too slow to author for a large document, use Pandoc Markdown-to-MathML rather than raw TeX in HTML. A real renderer such as MathJax/KaTeX is acceptable only when its script/CSS is included and verified; avoid CDN/network renderers unless internet use is acceptable for the task.

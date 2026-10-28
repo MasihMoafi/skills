@@ -1,11 +1,18 @@
 ---
 name: doc-style
-description: Enforces a brutalist, evidence-first documentation and launch-writing standard — structure, tone, and distribution outputs, with no unproven claims. Use when writing or reviewing a README.md, SKILL.md, specification, or launch material.
+description: Use when writing, reviewing or auditing a README, skill, specification, project page or launch material that must stay concise and evidence-backed, including "audit docs" and "prune AI self-talk".
 ---
 
 # Documentation Style
 
-## Naming structure
+The tone and evidence rules apply to every document. The first-screen, Quick
+Start, GitHub Pages, and distribution sections apply to public project pages and
+READMEs when relevant. For a `SKILL.md`, specification, or other format with a
+required schema, preserve that schema and use only the applicable style rules.
+
+## Optional project-document metadata
+
+Use this only when the target format does not already define its own frontmatter:
 
 ```yaml
 ---
@@ -40,13 +47,14 @@ Use one sharp sentence, one short explanation, and the strongest available proof
 
 ## Content structure
 
-### Intro — what is it?
+### Intro: what is it?
 
 A brutalist two- or three-sentence breakdown of what the project is, who it serves, and why it exists.
 
 ### Quick start
 
-Positioned immediately after the introduction. Provide the shortest, reproducible path to execution:
+For a runnable public project, position this immediately after the introduction.
+Provide the shortest, reproducible path to execution:
 
 Install: Single shell command.
 
@@ -64,11 +72,13 @@ Describe the concrete failure in the existing workflow. Prefer an observable pro
 
 Explain the mechanics and boundaries briefly, like a one-page manual. Include a small architecture diagram when it clarifies the system.
 
-### External docs & GitHub Pages
+### External documentation
 
-Keep the README.md high-level and readable. For deep technical details, module specs, or extended references:
+When deep public documentation exists, keep the README.md high-level and readable.
+For technical details, module specs, or extended references:
 
-Link specific section topics directly to dedicated pages hosted on GitHub Pages (e.g., MkDocs or Docusaurus).
+Link specific section topics to the project's existing documentation home.
+GitHub Pages with MkDocs or Docusaurus is one option when no home exists.
 
 Use internal linking to distribute reader traffic and keep the core README clean.
 
@@ -135,13 +145,27 @@ Demo script: show the failure state, the project in use, and the observable impr
 
 Every channel must point back to the same truthful source of record. Adapt the opening to the audience, but do not change the facts.
 
+## Audit
+
+To audit docs or prune AI self-talk, search the `*.md` and `*.html` files for `TODO`, `not done`,
+`AI note` and `no cost`, and group the findings by file. Remove:
+
+- notes the agent left for itself, including notes on abandoned iterations that no longer explain the result;
+- progress logs, `TODO` items and status tables for work that was finished, dropped or refactored;
+- price and free-tier claims ("no cost", "free forever") without a source and a date.
+
+Keep current limitations, skipped checks, known risks and useful handoffs; an unfinished task or a
+"not done" heading is not junk by itself. A review request produces findings; a cleanup request
+produces the edits, with no second ask. Where a plain diff cannot show a visual change, write a
+side-by-side HTML diff to `/tmp`.
+
 ## Final check
 
 Does the opening state the real product and current maturity?
 
 Is the Quick Start placed before long-form technical breakdowns?
 
-Are detailed references offloaded to GitHub Pages links?
+Are detailed references linked through the project's appropriate documentation home?
 
 Can every major claim be verified in the repository?
 

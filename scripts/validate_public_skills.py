@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the tracked public SKILL.md set and its index documentation."""
+"""Validate the tracked public SKILL.md set against the README list and each skill's frontmatter."""
 
 from __future__ import annotations
 
@@ -10,10 +10,6 @@ import sys
 from pathlib import Path
 
 
-PUBLIC_LINE = re.compile(
-    r"^\s*\d+\s+general-purpose skills are public:\s*(?P<list>.+)$",
-    re.MULTILINE,
-)
 README_ITEM = re.compile(
     r"^\s*-\s+\*\*\[`(?P<name>[a-z0-9][a-z0-9-]*)`\]"
     r"\((?P<path>[^)]+/SKILL\.md)\)",
@@ -45,14 +41,6 @@ def tracked_skill_names(root: Path) -> set[str]:
         if len(path.parts) == 2 and path.name == "SKILL.md":
             names.add(path.parent.name)
     return names
-
-
-def public_skill_names(vision: str) -> set[str]:
-    match = PUBLIC_LINE.search(vision)
-    if not match:
-        raise ValueError("VISION.md does not declare the public skill list")
-    public_part = match.group("list").split("Deliberately excluded", 1)[0]
-    return set(re.findall(r"`([a-z0-9][a-z0-9-]*)`", public_part))
 
 
 def readme_skill_names(readme: str) -> set[str]:
@@ -88,13 +76,12 @@ def main() -> int:
     warnings: list[str] = []
     try:
         tracked = tracked_skill_names(root)
-        public = public_skill_names((root / "VISION.md").read_text(encoding="utf-8"))
         documented = readme_skill_names((root / "README.md").read_text(encoding="utf-8"))
     except (OSError, RuntimeError, ValueError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
-    for label, actual in (("VISION.md", public), ("README.md", documented)):
+    for label, actual in (("README.md", documented),):
         missing = sorted(tracked - actual)
         extra = sorted(actual - tracked)
         if missing:
@@ -139,7 +126,7 @@ def main() -> int:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
 
-    print(f"OK: {len(tracked)} tracked public skills match VISION.md and README.md")
+    print(f"OK: {len(tracked)} tracked public skills match README.md")
     return 0
 
 

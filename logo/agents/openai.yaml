@@ -1,0 +1,4 @@
+interface:
+  display_name: "Logo and Visuals to SVG"
+  short_description: "Generate visual artwork, then trace and verify SVG paths."
+  default_prompt: "Use $logo to generate this visual with the image tool, trace the selected image through SVG Studio, and compare the SVG against its source."

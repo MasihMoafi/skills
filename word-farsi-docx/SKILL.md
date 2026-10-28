@@ -22,7 +22,7 @@ A proven approach for producing clean Persian Word output from a B Nazanin templ
 
 - **python-docx** for Word generation and styling
 - Optional: **PDF → images** or **PDF text extraction** for reference, then rebuild content *as Word objects* (paragraphs/tables/images)
-- Optional validation: export to PDF (Word) and visually compare against the reference render
+- Validation: render the final document with an available Word-compatible renderer, then inspect its pages and compare against the reference. If rendering is unavailable, report visual verification as incomplete.
 
 ---
 

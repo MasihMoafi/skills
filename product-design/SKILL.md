@@ -1,6 +1,6 @@
 ---
 name: product-design
-description: Turns an early product idea into explicit user flows, screen architecture, stack choices, and a frontend-first implementation plan. Use before coding a new product, redesigning a product flow, choosing a web/app stack, or translating a product concept into an AI-assisted build plan.
+description: Use when shaping a new product, materially redesigning a user flow, choosing a web or app stack, or turning a product concept into an implementation-ready design.
 ---
 
 # Product Design
@@ -17,7 +17,8 @@ The output must connect four things directly:
 
 1. who the product is for;
 2. what those users need to accomplish;
-3. what screens and flows support those jobs;
+3. what interactions and states support those jobs, including screens when the
+   product is visual;
 4. what technical stack best supports that product shape.
 
 Do not choose technology before the user and flow are clear.
@@ -34,9 +35,14 @@ Define:
 - platform: web, mobile, desktop, terminal, extension, or mixed;
 - core problem being removed;
 - two or three highest-value user flows;
-- the minimum set of screens or states required to complete those flows.
+- the minimum interactions and states required to complete those flows,
+  including screens when the product is visual.
 
 Do not begin with a feature inventory. Begin with what the user is trying to get done.
+
+### Resizable workspaces — Masih, 21 October 2026
+
+For web and desktop workspaces with a sidebar beside the main content, make the divider draggable so the user can expand or narrow the sidebar. Show a discoverable resize handle and cursor; support keyboard resizing, remember the chosen width and enforce bounds that keep the main content usable. Respect RTL pointer/arrow directions and keep mobile drawers usable without page overflow. Verify real dragging, reload persistence and narrow-screen behavior; a decorative divider is insufficient.
 
 ### Alignment strategy
 
@@ -137,9 +143,12 @@ Preferred input shape:
 **Execution Setup:** [Solo + AI / Team]
 ```
 
-## Required output
+## Choose the output that fits the request
 
-Return these in order.
+For a full UI product brief, return the four sections below in order. For a
+focused stack, flow, or repository question, return only the relevant sections.
+For terminal, API, or background products, describe commands, requests, states,
+and failure paths instead of inventing screens.
 
 ### 1. UX/UI and screen architecture
 

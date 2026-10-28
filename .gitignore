@@ -1,17 +1,23 @@
-# Personal — machine-specific config and personal notes, not meant for the public repo
+# Personal: machine-specific config, Masih's own rules and preferences, workspace checks
 /dev/
-/Learner/
+/personal/
+/workstation/
+/reopen-sessions/
+/findability/
+/junk-test/
+/writing-style/
+/logo/examples/
+/.ignore
 
-# Not a skill yet — reference notes with no SKILL.md, so nothing can install them
+# Not a skill yet: reference notes without SKILL.md
 /web-dev/
-/magic-prompt.md
 
-# Third-party — substantially OpenAI's Codex best-practices guide, kept for local reference
-/best-practices.md
+# Local Poteto verification adaptations; upstream attribution stays with each skill.
+/create-verification-skill/
+/maintain-verification-skill/
 
-# Third-party — authored by OpenAI (openai/skills), Apache-2.0, not mine to redistribute under this repo's MIT license
-/skill-creator/
-/skill-installer/
-
-# Private notes, kept locally
+__pycache__/
+/elements-of-style.md
+/spec/masih.md
 /VISION.md
+/ES.md

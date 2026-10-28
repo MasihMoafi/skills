@@ -1,48 +1,69 @@
 ---
 name: experiment-workflow
-description: Canonical Experiment & Testing Workflow. Use to rigorously evaluate systems by isolating variables, unit-testing, and running 3x10 query stress-tests.
+description: Use when designing, running, or comparing a repeatable experiment in any domain where a decision question, controlled variables, baselines, measurements, and raw evidence matter. Do not use for ordinary unit tests or one-off checks.
 ---
 
-# 1. Introduction: What is this?
-A comprehensive, canonical testing workflow—for any system where precision is required. The goal is to RIGOROUSLY evaluate systems by isolating variables (ablation studies), integration, regression, unit-tests, and presenting raw metrics without black-box assumptions.
+# Experiment Workflow
 
-# 2. Core Principles
+Evaluate one stated question at a time and preserve enough evidence for another
+person to reproduce the run and judge the conclusion.
 
-- **Variable Isolation:** Test one specific condition at a time (e.g., one file format like `.pdf`, one document size, or one specific chunking strategy).
-- **The Engine (THE AI) and the Architect (THE USER):** The agent acts purely as an instrument of the architect's will. It drafts tests and executes commands, but halts at every critical junction for the creator to evaluate and steer.
+## Core Principles
 
-# 3. Experiment Structure (The Blueprint)
-Every experiment logged or run using this workflow MUST include the following components:
+- **Decision first:** State what decision the experiment should inform and what
+  result would change that decision.
+- **Variable isolation:** Change one independent variable at a time when causal
+  interpretation matters. Record unavoidable confounders instead of hiding them.
+- **Falsifiability:** Define the expected outcome, comparison, and failure
+  condition before seeing the result.
+- **Evidence over summaries:** Preserve raw observations alongside calculated
+  metrics and conclusions.
+- **Decision ownership:** The agent may draft and run an approved experiment.
+  Ask before choices that would change the hypothesis, data, cost, or evaluation
+  method; do not interrupt for routine execution details.
 
-## A. Objectives (The Questions We Want Answers To)
-Before running tests, the user must clearly define the exact hypothesis or goal, the questions they want answered, and whether the experiments can actually answer them.
-Test no 1: This is an example of one of the RAG experiments in which we aimed to test each file separately.
-- Does the system handle academic documents better than narrative books?
-- At what document length does context retrieval begin to degrade?
-- Does altering the chunk size from improve semantic matching without losing keyword precision?
+## Workflow
 
-## B. The Source Material
-Test no 1:
-- Define the exact absolute path to the test file(s).
-- Note the file type, total size/pages, and the underlying parsing logic (e.g., Jupyter cell parser vs. Recursive Character Splitter).
+### 1. Question and decision
+Turn the request into one precise question or hypothesis. State the decision it
+will inform, the comparison being made, and what the experiment cannot establish.
 
-## C. The Queries (The 3x10)
-Test no 1:
-For a standard test on medium-to-large documents, draft 30 queries designed to stress-test different mechanisms. (Scale to 3x5 for shorter docs).
-- **10 Semantic Queries:** Abstract, thematic, and conceptual questions. Tests the embedding model's deep contextual understanding.
-- **10 Keyword Queries:** Specific names, dates, math, and hard facts. Tests the exact-match (e.g., BM25) retrieval.
-- **10 Hybrid Queries:** Context combined with specific details. Tests the fusion/reranking mechanisms.
-*The creator must review and approve these queries before execution.*
+### 2. Variables and controls
+Name the independent variable, observed outcomes, fixed conditions, baseline,
+and known confounders. If multiple variables must change together, describe the
+run as a comparison rather than claiming a single cause.
 
-## D. Execution & Raw Metrics Logging
-Test no 1:
-The agent executes the approved queries and logs the raw data. No assumptions are made. The log must include:
-- Warm-up/Model loading time.
-- Total chunks generated from the document.
-- Token/Word/Character limit per chunk.
-- The specific chunks retrieved for each query.
-- Speed of retrieval.
+### 3. Inputs and environment
+Record the exact inputs, versions, configuration, hardware or operating
+conditions, random seeds when relevant, and any preprocessing. Keep the same
+conditions across runs unless one is the variable under test.
 
-## E. Evaluation & Tuning Directives
-Test no 1:
-The creator evaluates the raw data and provides the next directive. 
+### 4. Measurements and sampling
+Choose measures that answer the stated question. Define units, collection
+method, acceptance threshold, number of repetitions or samples, aggregation,
+and treatment of failures or outliers before execution. Use the smallest sample
+that can answer the question honestly; do not imply statistical certainty that
+the design cannot support.
+
+### 5. Execute and preserve evidence
+Record commands or procedures, timestamps when relevant, raw outputs,
+measurements, failures, and deviations from the plan. Keep baseline and variant
+results side by side.
+
+### 6. Evaluate and iterate
+Separate observations from interpretations. Compare the evidence with the
+predeclared threshold, report uncertainty and limitations, and state the
+decision the evidence supports. For the next run, change one variable and retain
+the previous run as the baseline.
+
+## Domain adaptations
+
+Apply the same workflow to software behavior, performance, ML, retrieval, UX,
+operations, or process experiments. Choose domain-appropriate measures rather
+than forcing one template onto every experiment.
+
+For retrieval or RAG, a semantic/keyword/hybrid query suite is one useful stress
+test—not a universal requirement. A medium-to-large corpus may justify 10 queries
+of each type; smaller studies should use fewer. Preserve the query set, retrieved
+passages, ranks, latency, chunking configuration, and corpus identity so results
+can be compared and reproduced.

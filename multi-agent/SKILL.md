@@ -1,6 +1,6 @@
 ---
 name: multi-agent
-description: How to split work across several agents without losing control of it — one worktree per task, a prompt file in each folder, an acceptance test written before the work starts, and a coordinator who owns integration. Load when dispatching more than one agent, setting up worktrees for parallel tasks, or writing a task brief for another agent or session.
+description: Split work across agents without losing control: one worktree per task, a prompt file per folder, an acceptance test before work starts, a coordinator who integrates. Load when dispatching more than one agent or writing a brief for another agent.
 ---
 
 # Multi-Agent Dispatch
@@ -9,8 +9,9 @@ Parallel agents multiply throughput only when the tasks are genuinely independen
 multiply damage otherwise: two agents editing the same interface produce two plausible
 diffs that cannot both be right, and the cost of untangling them exceeds what was saved.
 
-The unit of dispatch is **one task, one branch, one worktree, one prompt file, one
-acceptance test**. Everything below serves that.
+For implementation, the unit of dispatch is **one task, one branch, one worktree,
+one prompt file, one acceptance check**. Read-only reviewers may inspect the same
+working tree when they must see its pending changes; forbid writes explicitly.
 
 ## Roles
 
@@ -27,12 +28,20 @@ is evidence, never acceptance.
 
 ## Setup, per task
 
+Resolve the worktree location from the project's instructions; Masih's shared
+location policy lives in `../dev/AGENTS.md`. Identify the current integration
+branch or other required base before creating a worktree. Do not assume `main`
+or the default branch contains the work the task depends on.
+
+Set `worktree_path`, `task_branch`, and `base_ref` to those verified values:
+
 ```bash
-git worktree add ../<project>-wt-<task> -b agent/<task> main
+git worktree add "$worktree_path" -b "$task_branch" "$base_ref"
 ```
 
-Start every worktree from the same committed baseline on the default branch. A worktree
-cut from a dirty tree inherits work nobody remembers doing.
+Independent implementation tasks use the same verified baseline. A new worktree
+contains committed content only; account for required pending changes without
+resetting or moving another session's work.
 
 Write the prompt to `WORKER_PROMPT.md` **at the root of that worktree**, not in a shared
 prompts folder. The person or agent opening a session in that folder should find its
@@ -42,7 +51,7 @@ commit it."
 Remove the worktree only after its branch is integrated or deliberately abandoned:
 
 ```bash
-git worktree remove ../<project>-wt-<task>
+git worktree remove "$worktree_path"
 ```
 
 ## The prompt contract

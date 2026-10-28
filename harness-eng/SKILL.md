@@ -1,6 +1,6 @@
 ---
 name: harness-eng
-description: "Use when designing, evaluating, or simplifying an agent project harness: startup scripts, evaluator rubrics, mechanical guardrails and the evaluation loop for coding agents. The project docs themselves (AGENTS.md, feature map, folder map, VISION.md, ES.md) follow the project-docs skill."
+description: "Use when designing, evaluating or simplifying an agent project harness: startup scripts, evaluator rubrics, mechanical guardrails and the evaluation loop. The project docs themselves follow the project-docs skill."
 ---
 
 # Harness Engineering
