@@ -17,7 +17,7 @@ LIBRARY = Path(__file__).resolve().parents[1]
 REGISTRIES = (HOME / '.claude/skills', HOME / '.agents/skills', HOME / '.codex/skills')  # the first is Claude Code's
 CONFIG = Path(os.environ['CLAUDE_CONFIG_DIR']) / 'skills' if os.environ.get('CLAUDE_CONFIG_DIR') else None  # Claude Code's account dir when it is not ~/.claude
 NOT_SKILLS = {'dev', 'scripts'}
-ELPIS_OWNED = {'synced'}  # Elpis recreates this in the config dir; it is not a skill
+ELPIS_OWNED = {'synced'}  # Elpis recreates this in the registries; it is not a skill
 
 
 def show(path):
@@ -63,13 +63,15 @@ def sync(lib, registries, config, apply=False):
         for name, folder in skills.items():
             link(registry / name, folder)
         for entry in entries(registry):
+            if entry.name in ELPIS_OWNED:
+                continue
             if entry.name not in skills and not (entry / 'SKILL.md').is_file():
                 prune(entry)
 
     if config is None:
         return out
     claude = registries[0]
-    names = {entry.name for entry in entries(claude)}
+    names = {entry.name for entry in entries(claude) if entry.name not in ELPIS_OWNED}
     for name in sorted(names):
         link(config / name, claude / name)
     for entry in entries(config):

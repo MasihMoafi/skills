@@ -51,14 +51,14 @@ class LinkSkills(unittest.TestCase):
 
     def test_real_directory_is_left_and_reported(self):
         (self.regs[2] / 'alpha').mkdir()           # a real folder where a library link belongs
-        (self.regs[2] / 'synced').mkdir()          # a real folder without SKILL.md
+        (self.regs[2] / 'notes').mkdir()          # a real folder without SKILL.md
         (self.regs[2] / 'third').mkdir()           # a third-party skill
         (self.regs[2] / 'third' / 'SKILL.md').write_text('x')
         out = '\n'.join(self.run_sync())
         self.assertIn(f'conflict {self.regs[2] / "alpha"}', out)
-        self.assertIn(f'conflict {self.regs[2] / "synced"}', out)
+        self.assertIn(f'conflict {self.regs[2] / "notes"}', out)
         self.assertNotIn('third', out)
-        for name in ('alpha', 'synced', 'third'):
+        for name in ('alpha', 'notes', 'third'):
             self.assertFalse((self.regs[2] / name).is_symlink())
 
     def test_config_mirror_gains_and_loses_entries(self):
