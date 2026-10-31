@@ -1,6 +1,7 @@
 # Personal: machine-specific config, the owner's rules and preferences, workspace checks
 /dev/
 /personal/
+/add-notes/
 /workstation/
 /reopen-sessions/
 /findability/
