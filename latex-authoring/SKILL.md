@@ -7,35 +7,13 @@ description: Write, structure and compile LaTeX papers and reports (NeurIPS, ICM
 
 Write, compile, debug and check LaTeX manuscripts with a modular layout, a clean build and verified citations.
 
-## Layout
+## Layout and style
 
-Split the paper into files; never write it as one `.tex` file.
-
-```
-paper/
-├── main.tex          # documentclass, packages, \input of sections
-├── macros.tex        # notation and semantic commands
-├── references.bib    # verified BibTeX entries
-├── sections/         # 00_abstract.tex, 01_introduction.tex, ...
-├── figures/          # PDF/EPS vectors, PNG rasters, TikZ code
-└── tables/           # one file per table, \input{tables/...}
-```
-
-Load packages in this order to avoid collisions: math and fonts (`amsmath`, `amssymb`, `mathtools`, `bm`); tables (`booktabs`, `multirow`, `tabularx`, `array`); graphics and floats (`graphicx`, `subcaption`, `float`, `placeins`); algorithms (`algorithm`, `algpseudocode` or `algorithm2e`); then `hyperref` late, followed immediately by `cleveref`.
-
-## Notation, equations and tables
-
-- Define notation once in `macros.tex`:
-  ```latex
-  \newcommand{\E}{\mathbb{E}}
-  \newcommand{\R}{\mathbb{R}}
-  \newcommand{\Loss}{\mathcal{L}}
-  \DeclareMathOperator*{\argmax}{arg\,max}
-  \DeclareMathOperator*{\argmin}{arg\,min}
-  ```
-- Use `align` or `align*` for multi-line equations; never `$$ ... $$` or `eqnarray`. Punctuate displayed equations as part of the sentence. Number only equations the text references.
-- Tables use `booktabs` (`\toprule`, `\midrule`, `\bottomrule`) and no vertical rules; use `\addlinespace` for separation. Right-align numbers, left-align text.
-- Place floats with `[t!]` and end sections with `\FloatBarrier` so figures do not drift into the next section.
+- Split the paper: `main.tex` (class, packages, `\input` of sections), `macros.tex` (notation, defined once), `references.bib`, `sections/`, `figures/`, `tables/` (one file per table). Never one big `.tex`.
+- Load `hyperref` late, then `cleveref` right after it.
+- `align`/`align*` for multi-line equations, never `$$` or `eqnarray`; number only equations the text cites.
+- `booktabs` tables with no vertical rules; numbers right-aligned.
+- Floats `[t!]`, and `\FloatBarrier` at section ends so figures stay in their section.
 
 ## Persian and English with XeLaTeX
 

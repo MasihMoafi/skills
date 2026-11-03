@@ -20,12 +20,10 @@ Before showing a diagram, chart, slide or report: the primary takeaway is appare
 
 ## HTML reports
 
-- Make reports, prototypes, dashboards, research artifacts and demos visible in HTML, showing the actual text, formulas, tables, charts, controls, outputs and state.
 - After creating or materially editing a user-facing HTML artifact, open it for the user unless they say not to. A screenshot or headless render verifies it; it does not replace opening it.
 - Open HTML in Chromium. For a site folder, especially one with assets, scripts or maps, serve it locally: `setsid python3 -m http.server <port> --directory <site-dir> >/tmp/<task>-server.log 2>&1 &`, then open `http://127.0.0.1:<port>/...`. Use `file://` only for a simple standalone page; if Chromium keeps loading, switch to the local server before saying it is open.
 - Browser automation and screenshots are costly. Use cheaper local checks unless the UI, formulas or charts are new or materially changed; then do one visual pass before opening.
 - Make alternative designs switchable in the HTML rather than describing them in chat.
-- Keep the source (Markdown, notebook, Python or JS) when useful.
 
 ## Slides and print layout
 
@@ -49,11 +47,8 @@ Before showing a diagram, chart, slide or report: the primary takeaway is appare
 </div>
 ```
 
-```css
-.math-display { direction: ltr; text-align: center; background: #fbfcfe; border: 1px solid #d9e0e8;
-  border-radius: 6px; padding: 12px 14px; margin: 10px 0; overflow: auto; }
-.math-display math { font-size: 1.18rem; }
-```
+Give `.math-display` `direction: ltr` and `overflow: auto` so wide formulas scroll inside RTL pages.
+
 
 - From Markdown, or when hand-written MathML is too slow for a large document, convert with Pandoc and keep the `.md` beside the `.html`: `pandoc input.md -s --mathml -c style.css -o output.html`.
 - MathJax or KaTeX is acceptable only when its script and CSS are included and verified; avoid CDN renderers unless network use is acceptable.
