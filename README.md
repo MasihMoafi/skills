@@ -11,7 +11,7 @@ type: reusable AI-agent workflows for developers using SKILL.md-compatible assis
 
 **Do not re-explain the same working method to an agent every session.**
 
-[![Skills](https://img.shields.io/badge/skills-17-orange?style=flat-square)](#available-skills)
+[![Skills](https://img.shields.io/badge/skills-18-orange?style=flat-square)](#available-skills)
 [![Install](https://img.shields.io/badge/install-npx%20skills-brightgreen?style=flat-square)](#quick-start)
 [![Format](https://img.shields.io/badge/format-SKILL.md-blue?style=flat-square)](#how-it-works)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
@@ -54,6 +54,7 @@ A skill turns that repeated instruction into a repository-owned procedure that c
 - **[`artifact`](artifact/SKILL.md)** — handling rules for PDFs, HTML reports, slides, LaTeX/XeLaTeX documents, and formula rendering.
 - **[`clean-system`](clean-system/SKILL.md)** — consent-gated disk-space audit and cleanup of the clutter coding agents leave behind.
 - **[`contribution-checklist`](contribution-checklist/SKILL.md)** — check a contributor issue or call for participation for a clear ask, a starting point, and mentoring.
+- **[`debugging`](debugging/SKILL.md)** — root cause before any fix: reproduce, check the environment, one hypothesis at a time, stop after three failed fixes.
 - **[`doc-style`](doc-style/SKILL.md)** — evidence-first README, specification, and launch-writing standard, with an audit mode for AI self-talk and stale claims.
 - **[`experiment-workflow`](experiment-workflow/SKILL.md)** — variable-isolated experiment workflow with explicit hypotheses and stress tests.
 - **[`first-principles`](first-principles/SKILL.md)** — engineering simplification workflow: question, delete, simplify, accelerate, automate.

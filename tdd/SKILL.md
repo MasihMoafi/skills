@@ -21,6 +21,8 @@ Write the failing test, then the code that passes it, one **slice** at a time.
 
 Refactor once the behavior is complete and green, then rerun the relevant suite.
 
+Code written before its test is deleted, not kept "as reference": a test written after passes at once and proves nothing. Exploring first is fine; throw the exploration away, then start at red. A test that is hard to write means an interface that is hard to use: simplify the interface.
+
 ## A good test
 
 - Checks behavior through the seam and survives a refactor that keeps it.
@@ -37,4 +39,4 @@ Write the regression test first and show it failing on the current code for the 
 
 Show the test command's red output before, the same command green after, and the wider suite green. Label the work honestly: TDD, regression test, characterization test or refactor.
 
-Source: `mattpocock/skills` (`tdd`).
+Sources: `mattpocock/skills` (`tdd`); [obra/superpowers](https://github.com/obra/superpowers) (`test-driven-development`, MIT).
