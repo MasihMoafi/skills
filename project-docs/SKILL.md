@@ -15,7 +15,7 @@ Each fact about a project has one home. Read in this order: `AGENTS.md` (loaded 
 | `ES.md`, title "(updated YYYY-MM-DD)" | `## Now`, `## Next`, `## Broken`, `## Open decisions` | 40 lines |
 | `VISION.md` | identity in one line, `## Thesis`, `## Non-goals` | 25 lines |
 | `lat.md/workspace.md` | every top-level item and why it exists | — |
-| `.agents/skills/verify-<app>/features/` | one file per user-facing feature: how to reach it, drive it, its code, its gotchas | — |
+| `.agents/skills/verify-<app>/features/` | one file per user-facing feature: how to reach it, drive it, its code, its gotchas; made by `create-verification-skill`, kept true by `maintain-verification-skill` | — |
 | `reports/`, commit messages | evidence: hashes, run IDs, verification prose | — |
 
 `check_pointers.py` enforces the limits and headings. These files are local notes: keep them out of public git and link them into new worktrees.
