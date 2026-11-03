@@ -18,21 +18,21 @@ Each fact about a project has one home. Read in this order: `AGENTS.md` (loaded 
 | `.agents/skills/verify-<app>/features/` | one file per user-facing feature: how to reach it, drive it, its code, its gotchas; made by `create-verification-skill`, kept true by `maintain-verification-skill` | — |
 | `reports/`, commit messages | evidence: hashes, run IDs, verification prose | — |
 
-`check_pointers.py` enforces the limits and headings. These files are local notes: keep them out of public git and link them into new worktrees.
+A workspace check can enforce the limits and headings (here: `findability/check_pointers.py`). These files are local notes: keep them out of public git and link them into new worktrees.
 
 ## What goes in AGENTS.md
 
-It loads into every session, so each line must apply to every task there (Masih's vault: *Writing a Good CLAUDE.md*, *Steering Claude Code*).
+It loads into every session, so each line must apply to every task there (HumanLayer, *Writing a Good CLAUDE.md*; Anthropic, *Steering Claude Code*).
 
 - Yes: what the project is, how to build, test and verify it, where things live (as pointers), and rules that hold for every task.
-- No: procedures (a skill), task-specific notes (the feature file), state (`ES.md`), copies of global rules (`skills/dev/`), code style (a linter).
+- No: procedures (a skill), task-specific notes (the feature file), state (`ES.md`), copies of global rules (the user-level instructions), code style (a linter).
 - A "never do X" that agents keep breaking needs a check or hook; the line in `AGENTS.md` is not enough.
 - A common mistake is one dated line: what went wrong, the rule, and its guard (or "No guard").
 
 ## What goes in ES.md
 
 - `## Now`: what is true today, in up to five lines. Each line states a fact; its proof goes to `reports/`.
-- `## Next`: Masih's open requests, newest date first, one line each, starting `Feature:`, `Fix:`, `Remove:` or `Keep:`. Delete a line only when he has seen it working. When the log outgrows the file, it moves to a local `REQUESTS.md` beside `ES.md` (same line format), and `## Next` keeps his ranked items and a link.
+- `## Next`: the user's open requests, newest date first, one line each, starting `Feature:`, `Fix:`, `Remove:` or `Keep:`. Delete a line only when the user has seen it working. When the log outgrows the file, it moves to a local `REQUESTS.md` beside `ES.md` (same line format), and `## Next` keeps the user's ranked items and a link.
 - `## Broken` and `## Open decisions`: one line each; a decision names who decides.
 - Rewrite the file in place; never append a progress log.
 
@@ -45,4 +45,4 @@ It loads into every session, so each line must apply to every task there (Masih'
 
 ## Create the layout when absent
 
-Inspect the project two levels deep, draft the missing files in the shape above, and show Masih `VISION.md` before you save it. Exemplar: this library's `VISION.md`.
+Inspect the project two levels deep, draft the missing files in the shape above, and show the user `VISION.md` before you save it. Exemplar: this library's `VISION.md`.

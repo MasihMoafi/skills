@@ -3,63 +3,15 @@ name: experiment-workflow
 description: Use when designing, running, or comparing a repeatable experiment where a decision question, controlled variables, baselines, measurements, and raw evidence matter. Not for ordinary unit tests or one-off checks.
 ---
 
-# Experiment Workflow
+# Experiment workflow
 
-Evaluate one stated question at a time and preserve enough evidence for another
-person to reproduce the run and judge the conclusion.
+One stated question at a time, with enough evidence for someone else to rerun it and judge the conclusion.
 
-## Core Principles
+1. **Decision.** State the decision the experiment informs and the result that would change it. One precise question; say what it cannot establish.
+2. **Variables.** Name the independent variable, outcomes, fixed conditions, baseline and known confounders. Change one variable at a time when you claim a cause; if several must move together, call it a comparison.
+3. **Setup.** Record exact inputs, versions, configuration, hardware, seeds and preprocessing; keep them fixed unless one is the variable.
+4. **Measures, set before running.** Units, method, pass threshold, repetitions, aggregation, and how failures and outliers count. Use the smallest sample that answers honestly; claim no certainty the design cannot carry.
+5. **Run and keep evidence.** Commands, raw outputs, failures and deviations, with baseline and variant side by side.
+6. **Judge.** Separate observation from interpretation, compare against the threshold, state uncertainty and the decision the evidence supports. This run is the next one's baseline.
 
-- **Decision first:** State what decision the experiment should inform and what
-  result would change that decision.
-- **Variable isolation:** Change one independent variable at a time when causal
-  interpretation matters. Record unavoidable confounders instead of hiding them.
-- **Falsifiability:** Define the expected outcome, comparison, and failure
-  condition before seeing the result.
-- **Evidence over summaries:** Preserve raw observations alongside calculated
-  metrics and conclusions.
-
-## Workflow
-
-### 1. Question and decision
-Turn the request into one precise question or hypothesis. State the comparison
-being made and what the experiment cannot establish.
-
-### 2. Variables and controls
-Name the independent variable, observed outcomes, fixed conditions, baseline,
-and known confounders. If multiple variables must change together, describe the
-run as a comparison rather than claiming a single cause.
-
-### 3. Inputs and environment
-Record the exact inputs, versions, configuration, hardware or operating
-conditions, random seeds when relevant, and any preprocessing. Keep the same
-conditions across runs unless one is the variable under test.
-
-### 4. Measurements and sampling
-Choose measures that answer the stated question. Define units, collection
-method, acceptance threshold, number of repetitions or samples, aggregation,
-and treatment of failures or outliers before execution. Use the smallest sample
-that can answer the question honestly; do not imply statistical certainty that
-the design cannot support.
-
-### 5. Execute and preserve evidence
-Record commands or procedures, timestamps when relevant, raw outputs,
-measurements, failures, and deviations from the plan. Keep baseline and variant
-results side by side.
-
-### 6. Evaluate and iterate
-Separate observations from interpretations. Compare the evidence with the
-predeclared threshold, report uncertainty and limitations, and state the
-decision the evidence supports. Keep each run as the baseline for the next.
-
-## Domain adaptations
-
-Apply the same workflow to software behavior, performance, ML, retrieval, UX,
-operations, or process experiments. Choose domain-appropriate measures rather
-than forcing one template onto every experiment.
-
-For retrieval or RAG, a semantic/keyword/hybrid query suite is one useful stress
-test, not a universal requirement. A medium-to-large corpus may justify 10 queries
-of each type; smaller studies should use fewer. Preserve the query set, retrieved
-passages, ranks, latency, chunking configuration, and corpus identity so results
-can be compared and reproduced.
+For retrieval or RAG, keep the query set, retrieved passages, ranks, latency, chunking settings and corpus identity. A semantic/keyword/hybrid query suite is one useful stress test, sized to the corpus (about 10 of each type for a medium-to-large one).
