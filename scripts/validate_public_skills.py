@@ -9,6 +9,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import yaml
+
 
 README_ITEM = re.compile(
     r"^\s*-\s+\*\*\[`(?P<name>[a-z0-9][a-z0-9-]*)`\]"
@@ -101,6 +103,13 @@ def main() -> int:
             errors.append(f"{path}: missing YAML frontmatter")
             continue
         body = match.group("body")
+        try:
+            parsed = yaml.safe_load(body)
+        except yaml.YAMLError as exc:
+            errors.append(f"{path}: frontmatter is not valid YAML (installers skip it): {str(exc).splitlines()[0]}")
+            continue
+        if not isinstance(parsed, dict) or parsed.get("name") != name or not parsed.get("description"):
+            errors.append(f"{path}: frontmatter must parse to a name {name!r} and a description")
         name_match = NAME_FIELD.search(body)
         description_match = DESCRIPTION_FIELD.search(body)
         frontmatter_name = (

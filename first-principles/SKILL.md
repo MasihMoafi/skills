@@ -1,6 +1,6 @@
 ---
 name: first-principles
-description: Use only when the user explicitly asks for a first-principles review of a product, requirement, workflow, or implementation: question the requirements, delete what should not exist, then simplify.
+description: "Use only when the user explicitly asks for a first-principles review of a product, requirement, workflow, or implementation: question the requirements, delete what should not exist, then simplify."
 ---
 
 # First-Principles Review

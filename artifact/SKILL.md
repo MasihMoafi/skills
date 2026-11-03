@@ -1,6 +1,6 @@
 ---
 name: artifact
-description: Handling rules for visual and document artifacts: PDFs, HTML reports, dashboards, slides and formula rendering. Load when creating, editing, verifying, or opening any of these artifact types.
+description: "Handling rules for visual and document artifacts: PDFs, HTML reports, dashboards, slides and formula rendering. Load when creating, editing, verifying, or opening any of these artifact types."
 ---
 
 # Artifact
