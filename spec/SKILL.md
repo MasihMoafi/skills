@@ -3,118 +3,51 @@ name: spec
 description: Use for nontrivial implementation, requirements, a PRD or vision document, or acceptance criteria. Defines done before code. Not for trivial edits, exploration, spikes or prototypes.
 ---
 
-# Spec-Driven Development
+# Spec-driven development
 
-Define what done means before code is generated, because an agent silently fills any gap in intent from its training data.
+Define what done means before code, because an agent fills every gap in intent from its training data. Size the loop to the work: a small, known change gets a short spec in the same session; for discovery, spike first and specify once the behavior is known. A spec adds no approval gate; ask only about material gaps.
 
-Right-size the loop to the work. A small, well-understood change can use a short spec and plan in one session. For discovery, use a focused prompt, Plan Mode or a throwaway spike first; specify the production change once its behavior is known. A spec adds no approval gate; ask only about material gaps in intent.
-
-The loop: **Specify, Plan, Execute, Verify, Integrate, Learn.** Return to Specify or Plan whenever the evidence changes the intent or the approach.
+The loop: **Specify, Plan, Execute, Verify.** Go back to Specify when evidence changes the intent.
 
 ## 1. Specify
 
-State exactly what must be true when the work is done. Make the happy path observable; "feature works" is not a criterion. Add the risk criteria relevant to the change, and all four when it touches money, data, security or external integrations:
+Numbered items, each with an acceptance check and a status, written before work begins. A check is observable ("feature works" is not one). When the change touches money, data, security or an external integration, add all four risk checks:
 
-1. **Failure mode:** what happens when a dependency or write fails (*"If the write fails, restore UI state and show an error without clearing the form"*).
-2. **Concurrency:** what happens when actors or async events collide (*"Toggling a preference does not affect notifications already queued"*).
-3. **Observability:** how production behavior is measured, with a metric or threshold where useful.
-4. **Rollback:** how the earlier behavior is restored and verified.
+1. **Failure:** what happens when a dependency or write fails.
+2. **Concurrency:** what happens when actors or async events collide.
+3. **Observability:** how production behavior is measured.
+4. **Rollback:** how the old behavior comes back, and how that is checked.
 
-When the intent has gaps, interview the user instead of guessing:
-
-> *"I want to build [1-3 sentences]. Before writing anything, ask me as many questions as you need to write a complete spec: goal, context, constraints, acceptance criteria and non-goals. Cover trade-offs, edge cases, failure modes and concurrency where relevant. Do not write the spec until I tell you to."*
-
-Keep the artifacts under version control and reachable from the code they govern: in `specs/NNN-feature-name/`, `docs/specs/` or beside the code.
+When intent has gaps, interview the user (goal, constraints, criteria, non-goals, edge cases) before writing. Keep the spec in version control beside the code it governs (`specs/NNN-name/` or `docs/specs/`).
 
 ```markdown
-# SPEC: [Feature Name]
+# SPEC: [Feature]
 
-## Goal
-[1-3 sentences: the problem and the outcome for the user or business]
+Goal: [1-3 sentences: the problem and the outcome]
+Invariants: [contracts and rules that must not break]
+Constraints: [stack, banned dependencies, limits]
 
-## Context and Architecture Invariants
-- [Services, databases or contracts involved; rules that must not break]
+| # | Item | Acceptance check | Status |
+| --- | --- | --- | --- |
+| 1 | [observable happy path] | [command or action → result] | todo |
+| 2 | [failure / concurrency / rollback, as relevant] | … | todo |
 
-## Constraints
-- [Stack restrictions, banned dependencies, latency or memory limits]
-
-## Acceptance Criteria
-- [ ] [Observable happy path]
-- [ ] [Other independently testable behavior]
-- [ ] [Relevant failure, concurrency, observability or rollback condition]
-
-## Non-Goals
-- [Behavior or features the agent must not touch]
-
-## Stop Conditions
-- [Four to six specific to this task, such as:]
-- Stop and ask if two valid approaches conflict in architecture fit.
-- Stop and ask if a test still fails after 3 fix attempts.
-- Stop and ask before deleting or migrating data outside a test environment.
+Non-goals: [what must not be touched]
+Stop and ask: [3-5 task-specific conditions, e.g. a test still fails after 3 fixes; data would be deleted outside a test environment]
 ```
 
 ## 2. Plan
 
-The agent reads `spec.md`, explores the codebase's conventions and writes `plan.md` with no implementation code; the user reviews it only when a decision is theirs.
-
-```markdown
-# PLAN: [Feature Name]
-
-## Approach
-[Strategy grounded in the existing architecture]
-
-## Trade-Offs Considered
-- [A vs B]: why A, and what it gives up.
-
-## Files Affected
-- `path/to/file.ts`: [nature of change]
-
-## Sequencing
-1. [Prerequisite, such as a migration]
-2. [Core logic or endpoints]
-3. [UI and integration tests]
-```
-
-Then decompose `plan.md` into `tasks.md`: one atomic change per task, ordered by dependency, each small enough for one session. A done-check is binary and observable, such as a passing test or a command's output; if it needs "and" more than once, split the task. Rate each task on two independent axes: **importance** (Foundational, Important, Nice-to-have) expresses value; **difficulty** (Easy, Medium, Hard) routes the implementation.
-
-```markdown
-# TASKS: [Feature Name]
-
-## Phase 1: Backend
-- [ ] 1.1 [Task] (Foundational, Medium)
-  **Done when:** [endpoint returns 200 on a valid token, 401 without one]
-```
-
-For high-risk or stateful work, add `risks.md`, `rollback.md` or `adr.md`. An optional `implementation_notes.md` carries surprising legacy behavior, workarounds and discoveries across turns.
+Read the spec and the codebase's conventions; write the approach, the trade-off chosen and why, the files affected and the order. Then split it into tasks: one atomic change each, ordered by dependency, each with a binary done-check (if it needs "and" twice, split it). Rate each task's **importance** (foundational, important, nice-to-have) and **difficulty** (easy, medium, hard) separately: importance is value, difficulty routes the work.
 
 ## 3. Execute
 
-Hand the agent `spec.md`, `plan.md` and `tasks.md`. Run one task per fresh session when a combined diff would be too large to review or context rot is a real risk; otherwise run the whole list in one session. Mark `[x]` as each done-check passes. When reality contradicts the spec, stop, update `spec.md` and, if needed, `plan.md`, then resume.
+One task per fresh session when a combined diff would be too big to review; otherwise run the list in one session. Tick each item's status as its check passes. When reality contradicts the spec, stop, update the spec, then resume.
 
 ## 4. Verify
 
-Every applicable project gate must pass before you advance: linting, type checking, unit tests and relevant integration tests. Evidence ranks in ascending trust:
+Every project gate passes first (lint, types, tests). Evidence ranks: an agent's claim (untrusted) < automated tests or CI (necessary, not sufficient) < a real end-to-end run < the user's own acceptance, the only thing that closes "done". Name the level behind every completion claim, and give the user a one-line check per item.
 
-1. Agent claim: untrusted by default.
-2. Automated test or CI: necessary, never sufficient.
-3. A real end-to-end run in a production-like environment.
-4. The user's manual acceptance: the only thing that closes "done."
-
-Name the level behind every completion claim. Give the user a plain test checklist, one bullet per behavior stating what to do and what must happen. The task is done only when the user has checked it against the agreed criteria.
-
-## 5. Integrate and Learn
-
-Prepare a reviewable local result. Create a PR or merge only within existing authorization, after the gates and review. Specs live in two tiers. The strategic tier stays current: system-wide rules (`AGENTS.md`), ADRs and architecture invariants. The tactical tier is history: each `specs/NNN-...` folder records intent at one point in time. After integration, decide what the evidence requires you to update: the current spec or plan, strategic rules or ADRs, done-checks, or follow-on work.
-
-## Vision and requirements documents
-
-A vision document or PRD states:
-
-- **Thesis:** what the product is, in one line.
-- **Purpose:** what problem it solves, and for whom.
-- **Value:** each value proposition that is useful on its own.
-- **Non-goals:** deferred and unsupported behavior, next to the goals.
-
-Keep the stable vision apart from current implementation status, and cross-reference the two.
+For a vision document or PRD, follow `project-docs` (`VISION.md`): thesis, purpose, value, non-goals, kept apart from status.
 
 Source: *AI-Native Software Engineering*, chapters 5 and 6.
