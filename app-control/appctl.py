@@ -20,6 +20,8 @@ import base64, json, os, subprocess, sys, time, urllib.request
 from pathlib import Path
 
 os.environ["NO_PROXY"] = os.environ["no_proxy"] = "127.0.0.1,localhost"
+# The app must not inherit the agent's CLAUDE*/AI_AGENT* variables (an app that took the agent's config once refused its user's own sessions).
+APP_ENV = {k: v for k, v in os.environ.items() if not k.startswith(("CLAUDE", "AI_AGENT"))}
 APPS = {
     "elpis": {
         "port": int(os.environ.get("APPCTL_ELPIS_PORT", "9336")),
@@ -59,7 +61,7 @@ def x11_command(app, command, args):
     if command == "launch":
         OUT.mkdir(exist_ok=True)
         log = open(OUT / f"{app}.log", "ab")
-        subprocess.Popen(APPS[app]["cmd"], stdout=log, stderr=log, stdin=subprocess.DEVNULL, start_new_session=True)
+        subprocess.Popen(APPS[app]["cmd"], env=APP_ENV, stdout=log, stderr=log, stdin=subprocess.DEVNULL, start_new_session=True)
         for _ in range(60):
             if subprocess.run(["xdotool", "search", "--onlyvisible", "--name", APPS[app]["x11"]], capture_output=True).stdout:
                 return print(f"{app} is up as an X11 window")
@@ -96,7 +98,7 @@ def launch(app):
         return print(f"{app} already answers on port {port}")
     OUT.mkdir(exist_ok=True)
     log = open(OUT / f"{app}.log", "ab")
-    subprocess.Popen(APPS[app]["cmd"] + [f"--remote-debugging-port={port}"], stdout=log, stderr=log,
+    subprocess.Popen(APPS[app]["cmd"] + [f"--remote-debugging-port={port}"], env=APP_ENV, stdout=log, stderr=log,
                      stdin=subprocess.DEVNULL, start_new_session=True)
     for _ in range(240):
         if debug_port_ready(port):
